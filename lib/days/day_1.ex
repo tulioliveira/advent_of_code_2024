@@ -1,19 +1,19 @@
 defmodule Day1 do
-  @cwd File.cwd!
-
-  def solve() do
-    input = @cwd <> "/lib/input.txt" \
-      |> File.stream! \
-      |> Enum.map(&String.trim/1) \
-      |> Enum.map(fn(x) -> String.split(x, "   ") end)
-
-
-    {list1, list2} = Enum.reduce(input, {[], []}, fn [x, y], acc ->
-        {[String.to_integer(x) | acc |> elem(0) ], [String.to_integer(y) | acc |> elem(1) ]}
-      end)
+  @spec solvePart1() :: number()
+  def solvePart1() do
+    {list1, list2} = InputParser.day1("day_1.txt")
 
     {sortedList1, sortedList2} = {list1 |> Enum.sort(), list2 |> Enum.sort()}
 
     Enum.zip(sortedList1, sortedList2) |> Enum.map(fn {x, y} -> abs(x - y) end) |> Enum.sum()
+  end
+
+  @spec solvePart2() :: number()
+  def solvePart2() do
+    {list1, list2} = InputParser.day1("day_1.txt")
+
+    list1
+    |> Enum.map(fn x -> (Enum.filter(list2, fn y -> x == y end) |> Enum.count()) * x end)
+    |> Enum.sum()
   end
 end
