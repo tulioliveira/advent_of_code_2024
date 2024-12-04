@@ -15,4 +15,11 @@ defmodule InputParser do
       {list1 |> Enum.reverse(), list2 |> Enum.reverse()}
     end
   end
+
+  def day2(fileName) do
+    (@cwd <> "/inputs/" <> fileName)
+    |> File.stream!()
+    |> Enum.map(&String.trim/1)
+    |> Enum.map(fn x -> String.split(x, " ") |> Enum.map(&String.to_integer/1) end)
+  end
 end
